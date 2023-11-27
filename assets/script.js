@@ -17,36 +17,37 @@ const slides = [
 	}
 ]
 
-// Affichage des flèches sur le slider.
+// Déclaration des variables arrow left et arrow right
 
-let numero = 0;
+const arrowLeft = document.querySelector(".arrow_left");
+const arrowRight = document.querySelector(".arrow_right");
+const dots = document.querySelectorAll(".dot");
 
-const flecheGauche = document.querySelector(".arrow_left");
-flecheGauche.addEventListener("click", function () {ChangeSlide(-1);
-console.log(flecheGauche);
+// Sélection des bullets points
+
+let currentSlide = 0;
+
+// Event Listeners sur les flèches et défilement infini
+
+arrowLeft.addEventListener("click", function () {
+console.log("flèche gauche");
+currentSlide--;
+if (currentSlide < 0) {
+	currentSlide = dots.length - 1;
+}
+updateBulletPoint();
+updateSlideContent();
 });
 
-const flecheDroite = document.querySelector(".arrow_right");
-flecheDroite.addEventListener("click", function () {ChangeSlide(1);
-console.log(flecheDroite);
-});
+arrowRight.addEventListener("click", function () {
+	console.log("flèche droite");
+	currentSlide++;
+	if (currentSlide >= dots.length) {
+		currentSlide = 0;
+	}
+	updateBulletPoint();
+	updateSlideContent();
+	});
 
-console.log(slides.length);
 
-function ChangeSlide(sens) {
-	numero = numero + sens;
-	if (numero > slides.length - 1)
-	numero = 0;
-	if (numero < 0)
-	numero = slides.length - 1;
-	document.querySelector(".banner-img").src = './assets/images/slideshow/' + slides[numero] ['image'];
-	document.getElementById("text").innerHTML = slides[numero] ['tagLine'];
-	{console.log(sens)}
-}
 
-// Affichage des bullet points.
-
-const codeDot = document.querySelector(".dots").innerHTML = '<p class="dot"></p>'.repeat(slides.length);
-{
-	console.log(codeDot);
-}
