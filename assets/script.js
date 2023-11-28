@@ -17,37 +17,58 @@ const slides = [
 	}
 ]
 
-// Déclaration des variables arrow left et arrow right
+// Déclaration des flèches, des images et des points
 
-const arrowLeft = document.querySelector(".arrow_left");
-const arrowRight = document.querySelector(".arrow_right");
-const dots = document.querySelectorAll(".dot");
+let currentIndex = 0;
 
-// Sélection des bullets points
+const aLeft = document.querySelector(".arrow_left");
+const aRight = document.querySelector(".arrow_right");
+const dots = document.querySelector(".dots");
+const bannerImg = document.querySelector(".banner-img");
+const tagLine = document.querySelector("#banner p");
 
-let currentSlide = 0;
+// Ajout des Event Listeners
 
-// Event Listeners sur les flèches et défilement infini
-
-arrowLeft.addEventListener("click", function () {
-console.log("flèche gauche");
-currentSlide--;
-if (currentSlide < 0) {
-	currentSlide = dots.length - 1;
-}
-updateBulletPoint();
-updateSlideContent();
+// Event Listener Gauche
+aLeft.addEventListener("click", () => {
+	currentIndex--;
+	if(currentIndex < 0){
+		currentIndex = slides.length - 1;
+	}
+	updateSlider();
 });
 
-arrowRight.addEventListener("click", function () {
-	console.log("flèche droite");
-	currentSlide++;
-	if (currentSlide >= dots.length) {
-		currentSlide = 0;
+// Event Listener Droite
+aRight.addEventListener("click", () => {
+	currentIndex++;
+	if(currentIndex >= slides.length){
+		currentIndex = 0;
 	}
-	updateBulletPoint();
-	updateSlideContent();
-	});
+	updateSlider();
+})
 
+// Modification des Slides
 
+function updateSlider() {
+	
+// Slide/TagLine
+bannerImg.src = './assets/images/slideshow/' + slides[currentIndex].image;
+tagLine.innerHTML = slides[currentIndex].tagLine;
 
+// Dots sélectionnées
+const allDots = document.querySelectorAll('.dot');
+allDots.forEach((dot, index) => {
+	dot.classList.remove('dot_selected');
+	if (index === currentIndex) {
+	  dot.classList.add('dot_selected');
+	}
+  });
+}
+
+// Initialisation html et dots
+
+for (let i = 0; i < slides.length; i++) {
+	dots.innerHTML += '<span id="dot' + i + '" class="dot" title="Image ' + (i + 1) + '"></span>';
+  }
+  
+updateSlider();
